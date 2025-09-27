@@ -5,11 +5,11 @@ const generateInvoicePDF = (orderData: any) => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
 
-  // Gradient header (Dark Green Gradient)
+  // Gradient header (Dark Leaf Green Gradient)
   const ctx = doc.context2d;
   const gradient = ctx.createLinearGradient(0, 0, pageWidth, 0);
-  gradient.addColorStop(0, "#0b3d0b"); // Dark Green
-  gradient.addColorStop(1, "#1abc9c"); // Light Green
+  gradient.addColorStop(0, "#0b3d0b"); // Deep dark green
+  gradient.addColorStop(1, "#228B22"); // Leaf green
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, pageWidth, 30);
 
@@ -66,7 +66,7 @@ const generateInvoicePDF = (orderData: any) => {
       index + 1,
       item.name || "-",
       item.size || "-",
-      item.quantity || 0,
+      item.quantity ?? "-", // ✅ Show actual number or "-"
       (item.totalPrice ?? 0).toFixed(2),
     ]);
   });
@@ -77,7 +77,7 @@ const generateInvoicePDF = (orderData: any) => {
     body: tableRows,
     theme: "grid",
     headStyles: {
-      fillColor: [0, 77, 0], // Dark Green Header
+      fillColor: [34, 139, 34], // ✅ Leaf Green Header
       textColor: 255,
       fontStyle: "bold",
       halign: "center",
@@ -104,32 +104,26 @@ const generateInvoicePDF = (orderData: any) => {
   doc.setFont("helvetica", "bold");
   doc.text(`Total Amount: ${grandTotal.toFixed(2)} TK`, 140, finalY + 20);
 
-  // Outlet & Contact Info with outline
+  // ✅ Contact Info only (No outlet section)
   const infoStartY = finalY + 35;
-  const infoHeight = 60;
-  doc.setDrawColor(0, 0, 0);
-  doc.setLineWidth(0.5);
-  doc.rect(15, infoStartY - 5, pageWidth - 30, infoHeight, "S"); // outline
+  const lineGapInfo = 7;
 
-  const outlets = [
-    "Outlet 1: Bailey Road 143/2, AQP Shopping Mall, 3rd Floor (Opposite Fakhruddin Biriyani), New Bailey Road, Dhaka",
-    "Outlet 2: PLAZA AR, 3rd Floor, Shop 303, Dhanmondi 28, Dhaka",
-    "WhatsApp Order: +8801748399860", // updated phone number
-    "Facebook Page: https://www.facebook.com/Strikebdofficial",
-    "Website: https://www.strikeoffcial.site",
+  const contacts = [
+    "Facebook Page: https://www.facebook.com/kayaabd21",
+    "Website: https://kayaa-bd-core-xjwz.vercel.app/",
   ];
 
   let infoY = infoStartY;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
-  doc.text("Outlet & Contact Info:", 20, infoY);
-  infoY += lineGap + 2;
+  doc.text("Contact Info:", 20, infoY);
+  infoY += lineGapInfo + 2;
   doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
-  outlets.forEach((line) => {
+  contacts.forEach((line) => {
     const splitLines = doc.splitTextToSize(line, pageWidth - 40);
     doc.text(splitLines, 20, infoY);
-    infoY += splitLines.length * lineGap;
+    infoY += splitLines.length * lineGapInfo;
   });
 
   // Footer
