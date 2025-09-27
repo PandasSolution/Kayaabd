@@ -8,8 +8,8 @@ const generateInvoicePDF = (orderData: any) => {
   // Gradient header (Dark to Leaf Green)
   const ctx = doc.context2d;
   const gradient = ctx.createLinearGradient(0, 0, pageWidth, 0);
-  gradient.addColorStop(0, "#0b3d0b"); // Dark deep green
-  gradient.addColorStop(1, "#228B22"); // Leaf green
+  gradient.addColorStop(0, "#0b3d0b");
+  gradient.addColorStop(1, "#228B22");
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, pageWidth, 35);
 
@@ -21,42 +21,45 @@ const generateInvoicePDF = (orderData: any) => {
   doc.setFontSize(14);
   doc.text("Invoice", pageWidth / 2, 30, { align: "center" });
 
-  // Customer info
-  doc.setFontSize(11);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(0, 0, 0);
-
   const orderTime = new Date(orderData.orderTime || Date.now()).toLocaleString();
   const deliveryCharge = orderData.customerCity?.toLowerCase() === "dhaka" ? 80 : 120;
 
   let cursorY = 45;
   const lineGap = 7;
 
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(34, 139, 34); // Leaf green heading
-  doc.text("Invoice Details:", 20, cursorY);
+  // Section Box Helper (with shadow)
+  const drawBox = (y: number, title: string) => {
+    doc.setFillColor(245, 255, 245);
+    doc.setDrawColor(34, 139, 34);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(15, y - 8, pageWidth - 30, 10, 2, 2, "FD");
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(34, 139, 34);
+    doc.text(title, 20, y);
+  };
+
+  // Invoice Details
+  drawBox(cursorY, "Invoice Details");
   doc.setFont("helvetica", "normal");
   doc.setTextColor(0, 0, 0);
   doc.text(`Invoice No: ${orderData.invoiceNumber || "N/A"}`, 20, cursorY + lineGap);
   doc.text(`Date/Time: ${orderTime}`, 150, cursorY + lineGap, { align: "right" });
 
-  cursorY += lineGap * 2;
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(34, 139, 34);
-  doc.text("Customer Information:", 20, cursorY);
+  cursorY += lineGap * 3;
+
+  // Customer Information
+  drawBox(cursorY, "Customer Information");
+  cursorY += lineGap;
   doc.setFont("helvetica", "normal");
   doc.setTextColor(0, 0, 0);
+  doc.text(`Name: ${orderData.customerName || "-"}`, 20, cursorY + lineGap);
+  doc.text(`Phone: ${orderData.customerPhone || "-"}`, 20, cursorY + lineGap * 2);
+  doc.text(`Email: ${orderData.customerEmail || "-"}`, 20, cursorY + lineGap * 3);
 
-  cursorY += lineGap;
-  doc.text(`Name: ${orderData.customerName || "-"}`, 20, cursorY);
-  cursorY += lineGap;
-  doc.text(`Phone: ${orderData.customerPhone || "-"}`, 20, cursorY);
-  cursorY += lineGap;
-  doc.text(`Email: ${orderData.customerEmail || "-"}`, 20, cursorY);
-  cursorY += lineGap;
   const addressLines = doc.splitTextToSize(`Address: ${orderData.customerAddress || "-"}`, pageWidth - 40);
-  doc.text(addressLines, 20, cursorY);
-  cursorY += addressLines.length * lineGap;
+  doc.text(addressLines, 20, cursorY + lineGap * 4);
+  cursorY += lineGap * (4 + addressLines.length);
+
   doc.text(`City: ${orderData.customerCity || "-"}`, 20, cursorY);
   cursorY += lineGap;
   doc.text(`Postal Code: ${orderData.customerPostalCode || "-"}`, 20, cursorY);
@@ -71,7 +74,7 @@ const generateInvoicePDF = (orderData: any) => {
       index + 1,
       item.name || "-",
       item.size || "-",
-      item.quantity !== undefined ? item.quantity : "-", // Fix quantity
+      item.quantity !== undefined ? item.quantity : "-",
       (item.totalPrice ?? 0).toFixed(2),
     ]);
   });
@@ -82,7 +85,7 @@ const generateInvoicePDF = (orderData: any) => {
     body: tableRows,
     theme: "grid",
     headStyles: {
-      fillColor: [34, 139, 34], // Leaf green
+      fillColor: [34, 139, 34],
       textColor: 255,
       fontStyle: "bold",
       halign: "center",
@@ -92,7 +95,7 @@ const generateInvoicePDF = (orderData: any) => {
       cellPadding: 4,
       halign: "center",
     },
-    alternateRowStyles: { fillColor: [235, 250, 235] }, // light green rows
+    alternateRowStyles: { fillColor: [235, 250, 235] },
   });
 
   const finalY = (doc as any).lastAutoTable?.finalY || cursorY + 10;
@@ -108,17 +111,19 @@ const generateInvoicePDF = (orderData: any) => {
   doc.setTextColor(0, 0, 0);
   doc.text(`Delivery Charge: ${deliveryCharge} TK`, 140, finalY + 10);
 
-  // Total Amount Box
-  doc.setFillColor(34, 139, 34); // green box
-  doc.rect(120, finalY + 18, 70, 12, "F");
+  // Premium Total Box with 3D shadow
+  doc.setFillColor(34, 139, 34);
+  doc.setDrawColor(0, 77, 0);
+  doc.setLineWidth(0.8);
+  doc.roundedRect(120, finalY + 18, 70, 14, 3, 3, "FD");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.text(`Total: ${grandTotal.toFixed(2)} TK`, 155, finalY + 26, { align: "center" });
+  doc.text(`Total: ${grandTotal.toFixed(2)} TK`, 155, finalY + 28, { align: "center" });
 
-  // Contact Info
+  // Contact Info Box
   const infoStartY = finalY + 45;
-  const lineGapInfo = 7;
+  drawBox(infoStartY, "Contact Info");
 
   const contacts = [
     "Mobile: 01748399860",
@@ -126,26 +131,21 @@ const generateInvoicePDF = (orderData: any) => {
     "Website: https://kayaa-bd-core-xjwz.vercel.app/",
   ];
 
-  let infoY = infoStartY;
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(12);
-  doc.setTextColor(34, 139, 34);
-  doc.text("Contact Info:", 20, infoY);
-  infoY += lineGapInfo + 2;
+  let infoY = infoStartY + lineGap;
   doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
   doc.setTextColor(0, 0, 0);
   contacts.forEach((line) => {
     const splitLines = doc.splitTextToSize(line, pageWidth - 40);
     doc.text(splitLines, 20, infoY);
-    infoY += splitLines.length * lineGapInfo;
+    infoY += splitLines.length * lineGap;
   });
 
   // Footer
-  const footerY = infoY + 10;
+  const footerY = infoY + 12;
   doc.setFontSize(12);
   doc.setFont("helvetica", "italic");
-  doc.setTextColor(34, 139, 34); // green italic footer
+  doc.setTextColor(34, 139, 34);
   doc.text("Thank you for your order!", pageWidth / 2, footerY, { align: "center" });
 
   // Save PDF
