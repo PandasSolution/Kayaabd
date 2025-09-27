@@ -19,15 +19,17 @@ const ProductItem = ({
   };
 
   const discountPercent = product.productAttributes?.[0]?.discountPercent || 0;
+  const stock = product.productAttributes?.[0]?.stockAmount ?? 0;
 
   return (
     <div className="product-card-modern rounded-xl overflow-hidden flex flex-col relative">
       {/* Discount Badge */}
       {discountPercent > 0 && (
-        <div className="discount-badge">
-          {discountPercent}% OFF
-        </div>
+        <div className="discount-badge">{discountPercent}% OFF</div>
       )}
+
+      {/* Stock Out Badge */}
+      {stock <= 0 && <div className="stockout-badge">Stock Out</div>}
 
       {/* Product Images */}
       <Link
@@ -73,6 +75,7 @@ const ProductItem = ({
           <button
             className="add-cart-btn"
             onClick={() => handleProductModal(product)}
+            disabled={stock <= 0}
           >
             <i className="fal fa-shopping-cart"></i> Add to Cart
           </button>
@@ -81,6 +84,7 @@ const ProductItem = ({
           <button
             className="order-now-btn"
             onClick={() => handleProductModal(product)}
+            disabled={stock <= 0}
           >
             <i className="fas fa-shopping-bag"></i> Order Now
           </button>

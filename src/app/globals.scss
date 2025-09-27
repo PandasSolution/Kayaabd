@@ -1118,3 +1118,26 @@ body {
   vertical-align: middle; /* aligns text properly in container */
 }
 
+
+.stockout-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 60px;          /* circle width বড়ানো */
+  height: 60px;         /* circle height বড়ানো */
+  background: linear-gradient(135deg, #dc2626, #f87171); /* red gradient */
+  color: #fff;
+  font-size: 10px;       /* font ছোটানো */
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;    /* text center align */
+  line-height: 1.1;      /* spacing adjust */
+  border-radius: 50%;    /* perfect circle */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+  padding: 5px;          /* thoda padding for multi-line */
+}
