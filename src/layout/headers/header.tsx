@@ -76,7 +76,7 @@ const Header = ({ header_big }: IProps) => {
                       className="d-md-none"
                     /> */}
 
-                                        <div className="logo-text">Kayaa</div>
+                                        <div className="logo-text">KAYAA</div>
 
                   </Link>
                 </div>

@@ -50,7 +50,7 @@ function TrendingProducts({
           <div className="row">
             <div className="section__title-wrapper text-center mb-55">
               <div className="section__title mb-10">
-                <h2>Elegant & Trending Sharees</h2>
+                <h2>Elegant & Trending Sarees</h2>
               </div>
               <div className="section__sub-title">
                 <p>
