@@ -49,7 +49,7 @@ const TrackOrderModal: React.FC<TrackOrderModalProps> = ({ show, setShow }) => {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      const res = await fetch(`https://kayaa-bd-core.vercel.app/api/track?invoice=${invoice}`);
+      const res = await fetch(`https://strike-core-three.vercel.app/api/track?invoice=${invoice}`);
       if (!res.ok) throw new Error("Order not found");
       const data = await res.json();
       setStatus(data.data);
