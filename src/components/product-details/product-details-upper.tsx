@@ -76,7 +76,7 @@ const ProductDetailsUpper = ({
       setToastMessage("Please select a variant");
       return;
     }
-    const whatsappNumber = "+8801622534977"; // Replace with your number
+    const whatsappNumber = "+8801748399860"; // Replace with your number
     const message = `Hello! I want to order:
 - Product: ${product.name}
 - Variant/Size: ${variant}
