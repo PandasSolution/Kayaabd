@@ -40,33 +40,44 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
   };
 
   return (
-    <section style={{ padding: "90px 12px", background: "#f5f8f7" }}>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-xl-8 col-lg-8">
-            <div className="subscribe-modern-card">
-              <h2>Get Discount Info</h2>
-              <p>
-                Subscribe to receive updates on new arrivals and exclusive
-                discount offers.
-              </p>
+    <section
+      style={{
+        padding: "90px 12px",
+        background: "#f5f8f7",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <div className="subscribe-modern-card">
+          <h2>Get Discount Info</h2>
+          <p>
+            Subscribe to receive updates on new arrivals and exclusive
+            discount offers.
+          </p>
 
-              <form onSubmit={handleSubmit} className="subscribe-form">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <button type="submit" disabled={loading}>
-                  {loading ? "Subscribing..." : "Subscribe"}
-                </button>
-              </form>
+          <form onSubmit={handleSubmit} className="subscribe-form">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <button type="submit" disabled={loading}>
+              {loading ? "Subscribing..." : "Subscribe"}
+            </button>
+          </form>
 
-              {toastMessage && <div className="toast">{toastMessage}</div>}
-            </div>
-          </div>
+          {toastMessage && <div className="toast">{toastMessage}</div>}
         </div>
       </div>
 
@@ -79,6 +90,10 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
           box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
           transition: all 0.4s ease;
           transform-style: preserve-3d;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
 
         .subscribe-modern-card:hover {
@@ -91,6 +106,7 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
           font-weight: 700;
           margin-bottom: 15px;
           font-size: 28px;
+          text-align: center;
         }
 
         p {
@@ -98,13 +114,19 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
           font-size: 16px;
           margin-bottom: 30px;
           line-height: 1.6;
+          text-align: center;
+          max-width: 460px;
         }
 
         .subscribe-form {
           display: flex;
           gap: 12px;
           justify-content: center;
+          align-items: center;
           flex-wrap: wrap;
+          width: 100%;
+          max-width: 430px;
+          margin: auto;
         }
 
         .subscribe-form input {
@@ -115,6 +137,7 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
           border: 1px solid #cfd8dc;
           font-size: 14px;
           transition: all 0.3s ease;
+          text-align: center;
         }
 
         .subscribe-form input:focus {
@@ -132,6 +155,7 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
           font-weight: 600;
           cursor: pointer;
           transition: all 0.3s ease;
+          width: 100%;
         }
 
         .subscribe-form button:hover {
@@ -156,6 +180,7 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
           border-radius: 10px;
           font-size: 14px;
           animation: fadeIn 0.5s ease;
+          text-align: center;
         }
 
         @keyframes fadeIn {
@@ -173,9 +198,26 @@ const SubscribeArea = ({ style_2, style_3 }: IProps) => {
           .subscribe-modern-card {
             padding: 40px 20px;
           }
+
+          .subscribe-form {
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            max-width: 350px;
+          }
+
           .subscribe-form input,
           .subscribe-form button {
             width: 100%;
+            text-align: center;
+          }
+
+          h2 {
+            font-size: 22px;
+          }
+
+          p {
+            font-size: 14px;
           }
         }
       `}</style>

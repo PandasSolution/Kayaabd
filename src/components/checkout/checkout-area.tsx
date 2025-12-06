@@ -294,6 +294,8 @@ const CheckoutArea = () => {
           padding: 50px 0;
           background: #ffffffff;
           min-height: 100vh;
+            padding-left: 35px;
+       
         }
 
         .neo-card {

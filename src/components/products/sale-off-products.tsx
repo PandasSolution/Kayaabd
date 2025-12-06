@@ -17,7 +17,7 @@ const SaleOffProducts = ({
   style_2 = false,
   featuredProducts = [],
 }: IProps) => {
-  const [visibleCount, setVisibleCount] = useState<number>(6);
+  const [visibleCount, setVisibleCount] = useState<number>(8);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const SaleOffProducts = ({
           </div>
 
           {/* PRODUCT GRID */}
-          <div className="row g-3">
+          <div className="row gy-4">
             {productsToShow.map((product: any, i: number) => {
               const firstImage =
                 product.images?.[0]?.image || "/placeholder.png";
@@ -65,7 +65,7 @@ const SaleOffProducts = ({
               return (
                 <div
                   key={i + product?.id}
-                  className="col-6 col-md-4 col-lg-4"
+                  className="col-6 col-md-3 col-lg-3"
                 >
                   <ProductItem product={normalizedProduct} />
                 </div>
@@ -93,6 +93,7 @@ const SaleOffProducts = ({
         <style jsx>{`
           .themed-sale-section {
             padding-top: 60px;
+            padding-bottom: 90px;
           }
 
           .sale-title {
@@ -129,6 +130,7 @@ const SaleOffProducts = ({
             border: none;
             color: #fff;
             font-weight: 600;
+             margin-top: 30px; 
             font-size: 15px;
             cursor: pointer;
             background: linear-gradient(135deg, #0b3d0b, #1abc9c);
@@ -145,6 +147,7 @@ const SaleOffProducts = ({
           @media (max-width: 767px) {
             .themed-sale-section {
               padding-top: 40px;
+              Margin-left: 15px;
             }
 
             .sale-title {
@@ -158,6 +161,7 @@ const SaleOffProducts = ({
             .see-more-btn-theme {
               padding: 12px 34px;
               font-size: 14px;
+              margin-top: 30px;
             }
           }
         `}</style>

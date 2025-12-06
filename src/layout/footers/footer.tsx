@@ -41,6 +41,7 @@ const Footer = ({ style_2 }: { style_2?: boolean }) => {
           font-family: 'Poppins', sans-serif;
           overflow: hidden;
           padding: 80px 0 0 0;
+         padding-left: 35px;
         }
         
         .kayaa-ultra-footer::before {

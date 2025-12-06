@@ -22,7 +22,7 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
   const productsToShow = allProducts.slice(0, visibleCount);
 
   return (
-    <section className="shop__area pt-100 pb-100">
+    <section className="shop__area  pt-80 pl-25">
       <div className="container">
 
         {/* Category Headline */}
@@ -46,7 +46,7 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
               {productsToShow.map((product: any) => (
                 <div
                   key={product.id}
-                  className="col-xl-4 col-lg-4 col-md-6 col-6 product-col"
+                  className="col-xl-3 col-lg-3 col-md-6 col-6 product-col"
                 >
                   <ProductItem product={product} />
                 </div>
@@ -79,6 +79,8 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
             padding-left: 6px;
             padding-right: 6px;
           }
+
+         
         }
 
         /* ---------- See More Button Theme ---------- */
@@ -94,7 +96,12 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
           cursor: pointer;
           transition: all 0.35s ease;
           box-shadow: 0 8px 20px rgba(11,61,11,0.35);
+          margin-top: 30px;
         }
+
+        .shop__area{
+  padding-left: 30px;
+      }
 
         /* Hover Animation */
         .theme-see-more-btn:hover {
@@ -108,7 +115,7 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
         /* Mobile Button Size */
         @media (max-width: 576px) {
           .theme-see-more-btn {
-            width: 100%;
+            width: 50%;
             padding: 14px 10px;
             font-size: 14px;
           }
@@ -119,6 +126,7 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
 .theme-title-wrapper {
   margin-bottom: 55px;
 }
+
 
 .theme-section-title {
   font-size: 44px;
@@ -158,6 +166,8 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
     transform: translateY(0);
   }
 }
+
+
 
 
       `}</style>

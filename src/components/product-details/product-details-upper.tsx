@@ -122,6 +122,7 @@ const ProductDetailsUpper = ({ product, bottomShow = true }: IProps) => {
   const CARD_STYLE: React.CSSProperties = {
     background: "linear-gradient(135deg, #fafafaff 10%, #dff7ebff 50%, #ecececff 120%)",
     borderRadius: "20px",
+  
     padding: "20px",
     boxShadow: "8px 8px 15px #cad1db, -8px -8px 15px #ffffff",
     color: "#1f1f1f",
@@ -181,7 +182,7 @@ const ProductDetailsUpper = ({ product, bottomShow = true }: IProps) => {
   };
 
   return (
-    <div className="row p-4" style={{ background: "#f5f5f5ff", fontFamily: 'sans-serif', color: '#1f1f1f' }}>
+    <div className="row p-4" style={{ background: "#f5f5f5ff", fontFamily: 'sans-serif', color: '#1f1f1f',paddingLeft: "35px"}}>
       {/* Product Images */}
       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
         <div style={{ ...CARD_STYLE, padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center', perspective: '1200px' }}>
