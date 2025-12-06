@@ -30,7 +30,7 @@ const ProductModal = () => {
           </button>
         </div>
         <div className="product__modal-inner">
-          {product && <ProductDetailsUpper product={product} style_2={true} bottomShow={false} />}
+          {/* {product && <ProductDetailsUpper product={product} style_2={true} bottomShow={false} />} */}
         </div>
       </div>
 

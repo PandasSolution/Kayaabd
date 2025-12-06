@@ -1,31 +1,47 @@
-'use client'
-import React, { useEffect } from "react";
+"use client";
+import React from "react";
+import { FaWhatsapp } from "react-icons/fa";
 
-const BackToTop = () => {
-  useEffect(() => {
-    const result = document.querySelector(".scroll-up") as HTMLElement;
-    if (result) {
-      document.addEventListener("scroll", () => {
-        if (window.scrollY > 200) {
-          result.classList.add('d-block');
-          result.classList.remove('d-none');
-        } else {
-          result.classList.remove('d-block');
-          result.classList.add('d-none');
-        }
-      });
-      result.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    }
-  }, []);
+const WhatsAppChat = () => {
+  const phoneNumber = "01748399860"; // Bangladesh number
+  const predefinedMsg = encodeURIComponent(
+    "Hello! I want to inquire about your products."
+  );
+
+  const handleClick = () => {
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${predefinedMsg}`,
+      "_blank"
+    );
+  };
+
   return (
-    <div className="scroll-up d-none" id="scroll">
-      <a className="cursor-pointer">
-        <i className="fas fa-level-up-alt"></i>
-      </a>
+    <div style={styles.container} onClick={handleClick}>
+      <FaWhatsapp size={28} style={{ color: "#fff" }} />
     </div>
   );
 };
 
-export default BackToTop;
+export default WhatsAppChat;
+
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    position: "fixed",
+    bottom: "90px", // upore niye asha
+    right: "25px",
+    width: "60px",
+    height: "60px",
+    background: "#25D366",
+    borderRadius: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    cursor: "pointer",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.3)",
+    zIndex: 9999,
+    transition: "all 0.3s ease, transform 0.3s ease",
+  },
+};
+
+// optional: hover effect with React inline style
+// You can add this in CSS or using a styled component for smoother hover

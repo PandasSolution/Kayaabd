@@ -62,7 +62,7 @@ const HeaderFour = () => {
                         </button>
                         <nav>
                           {/* cart area start */}
-                          <MiniCart />
+             
                           {/* cart area end */}
                         </nav>
                       </li>

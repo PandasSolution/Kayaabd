@@ -68,7 +68,7 @@ const HeaderThree = () => {
                             <span>({quantity})</span>
                           </button>
                           {/* cart area start */}
-                          <MiniCart />
+                     
                           {/* cart area end */}
                         </li>
                         <li>

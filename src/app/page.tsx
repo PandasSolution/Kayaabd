@@ -12,6 +12,8 @@ import SubscribeArea from "@/components/subscribe-area";
 import Footer from "@/layout/footers/footer";
 import { Suspense } from "react";
 import Loading from "./loading";
+import InstructionCard3DWithIcons from "@/utils/instuction";
+import ShopFeatures3D from "@/utils/Feature";
 
 export default async function HomePage() {
   const banners = await fetchData({
@@ -54,7 +56,13 @@ export default async function HomePage() {
           {/* Trending Products */}
           {trendingProducts?.data?.length > 0 && (
             <TrendingProducts trendingProd={trendingProducts?.data} />
+
+
           )}
+
+          <ShopFeatures3D/>
+
+   
 
           {/* Sale/Featured Products */}
        <SaleOffProducts
@@ -66,6 +74,8 @@ export default async function HomePage() {
 
           {/* Subscribe Area */}
           <SubscribeArea />
+
+              <InstructionCard3DWithIcons/>      
         </Suspense>
       </main>
 

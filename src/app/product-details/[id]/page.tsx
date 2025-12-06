@@ -47,7 +47,7 @@ export default async function ProductDetailsPage({ params }: any) {
                   <div className="container">
                     <ProductDetailsUpper
                       product={productRes?.data}
-                      isModal={false}
+                
                     />
                   </div>
                 </div>

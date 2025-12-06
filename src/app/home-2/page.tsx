@@ -25,7 +25,7 @@ export default async function HomePageTwo() {
   return (
     <Wrapper>
       {/* header start */}
-      <Header header_big={true} />
+    
       {/* header end */}
 
       <main className="box-25">

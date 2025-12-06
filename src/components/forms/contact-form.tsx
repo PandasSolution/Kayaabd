@@ -32,13 +32,12 @@ const ContactForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       setLoading(true);
 
       const resp = await postData(`/contacts`, data);
-      // alert(JSON.stringify(data))
-      // console.log(data);
 
       if (!resp?.success) {
         setToastMessage(resp?.message);
@@ -59,10 +58,19 @@ const ContactForm = () => {
   });
 
   return (
-    <>
+    <div
+      style={{
+        background: "#fff",
+        padding: "30px",
+        borderRadius: "16px",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+      }}
+      className="contact-card"
+    >
       <form onSubmit={onSubmit} id="contact-form">
-        <div className="row">
-          <div className="col-xl-6 col-lg-6">
+        <div className="row" style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          <div className="col-xl-6 col-lg-6" style={{ flex: "1", minWidth: "200px" }}>
             <div className="contact__input">
               <label>
                 Name <span className="required">*</span>
@@ -70,13 +78,20 @@ const ContactForm = () => {
               <input
                 id="name"
                 {...register("name")}
-                placeholder="Name"
+                placeholder="Your Name"
                 type="text"
+                style={{
+                  width: "100%",
+                  padding: "12px 15px",
+                  borderRadius: "8px",
+                  border: "1px solid #ddd",
+                  transition: "all 0.3s ease",
+                }}
               />
               <ErrorMsg msg={errors.name?.message!} />
             </div>
           </div>
-          <div className="col-xl-6 col-lg-6">
+          <div className="col-xl-6 col-lg-6" style={{ flex: "1", minWidth: "200px" }}>
             <div className="contact__input">
               <label>
                 Email <span className="required">*</span>
@@ -85,59 +100,127 @@ const ContactForm = () => {
                 id="email"
                 {...register("email")}
                 type="email"
-                placeholder="Email"
+                placeholder="Your Email"
+                style={{
+                  width: "100%",
+                  padding: "12px 15px",
+                  borderRadius: "8px",
+                  border: "1px solid #ddd",
+                  transition: "all 0.3s ease",
+                }}
               />
               <ErrorMsg msg={errors.email?.message!} />
             </div>
           </div>
         </div>
-        <div className="row">
+
+        <div className="row" style={{ marginTop: "15px" }}>
           <div className="col-xl-12">
             <div className="contact__input">
               <label>
                 Subject <span className="required">*</span>
               </label>
-              <input id="subject" {...register("subject")} type="text" />
+              <input
+                id="subject"
+                {...register("subject")}
+                type="text"
+                placeholder="Subject"
+                style={{
+                  width: "100%",
+                  padding: "12px 15px",
+                  borderRadius: "8px",
+                  border: "1px solid #ddd",
+                  transition: "all 0.3s ease",
+                }}
+              />
               <ErrorMsg msg={errors.subject?.message!} />
             </div>
           </div>
         </div>
-        <div className="row">
+
+        <div className="row" style={{ marginTop: "15px" }}>
           <div className="col-xl-12">
             <div className="contact__input">
               <label>
                 Message <span className="required">*</span>
               </label>
-              <textarea {...register("message")} cols={30} rows={10}></textarea>
+              <textarea
+                {...register("message")}
+                cols={30}
+                rows={6}
+                placeholder="Write your message..."
+                style={{
+                  width: "100%",
+                  padding: "12px 15px",
+                  borderRadius: "8px",
+                  border: "1px solid #ddd",
+                  transition: "all 0.3s ease",
+                }}
+              ></textarea>
               <ErrorMsg msg={errors.message?.message!} />
             </div>
           </div>
         </div>
+
         {toastMessage && (
           <div
-            className="w-[100%] h-[20px] text-center py-2 my-3 text-black"
-            style={{ background: "#7fea7f" }}
+            style={{
+              width: "100%",
+              padding: "10px",
+              margin: "15px 0",
+              textAlign: "center",
+              color: "#fff",
+              borderRadius: "8px",
+              background: "#1abc9c",
+              fontWeight: 500,
+            }}
           >
             {toastMessage}
           </div>
         )}
-        <div className="row">
+
+        <div className="row" style={{ marginTop: "5px" }}>
           <div className="col-xl-12">
-            <div className="contact__submit">
-              {loading ? (
-                <button type="submit" className="os-btn os-btn-black" disabled>
-                  Sending...
-                </button>
-              ) : (
-                <button type="submit" className="os-btn os-btn-black">
-                  Send Message
-                </button>
-              )}
-            </div>
+            <button
+              type="submit"
+              style={{
+                width: "100%",
+                padding: "12px",
+                borderRadius: "8px",
+                border: "none",
+                background: "#0b3d0b",
+                color: "#fff",
+                fontWeight: 600,
+                cursor: loading ? "not-allowed" : "pointer",
+                transition: "all 0.3s ease",
+              }}
+              disabled={loading}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.05)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
+              }}
+            >
+              {loading ? "Sending..." : "Send Message"}
+            </button>
           </div>
         </div>
       </form>
-    </>
+
+      <style jsx>{`
+        .contact-card:hover {
+          transform: translateY(-5px) rotateX(1deg);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        input:focus,
+        textarea:focus {
+          border-color: #0b3d0b;
+          outline: none;
+          box-shadow: 0 0 8px rgba(11, 61, 11, 0.2);
+        }
+      `}</style>
+    </div>
   );
 };
 

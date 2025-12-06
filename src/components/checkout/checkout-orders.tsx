@@ -2,6 +2,7 @@
 import useCartInfo from "@/hooks/use-cart-info";
 import { IProduct } from "@/types/product-d-t";
 import { useAppDispatch } from "@/redux/hook";
+import { remove_product } from "@/redux/features/cart"; // Update path as per your project
 
 type IProps = {
   cart_products: IProduct[];
@@ -28,6 +29,10 @@ const CheckoutOrders = ({
       : coupon.discountAmount ?? 0
     : 0;
 
+  const handleRemoveProduct = (productId: number, title: string) => {
+    dispatch(remove_product({ id: productId, title }));
+  };
+
   return (
     <div className="your-order-table table-responsive">
       {cart_products.length > 0 && (
@@ -41,8 +46,8 @@ const CheckoutOrders = ({
           <tbody>
             {cart_products.map((item: any, i) => (
               <tr key={i} className="cart_item border-b border-gray-200">
-                <td className="product-name flex items-center gap-3 py-2 relative">
-                  {/* Bigger product image */}
+                <td className="product-name flex items-center gap-3 py-2">
+                  {/* Product image */}
                   <img
                     src={item?.image || "/noimage.png"}
                     alt={item?.name}
@@ -58,21 +63,19 @@ const CheckoutOrders = ({
                       × {item.orderQuantity}
                     </span>
                   </div>
-
-                  {/* Remove button */}
-                  {/* <button
-                    className="absolute right-0 text-red-600 font-bold hover:text-red-800"
-                    style={{ top: "50%", transform: "translateY(-50%)" }}
-                    // onClick={() => handleRemoveProduct(item.id)}
-                  >
-                    ✕
-                  </button> */}
                 </td>
 
-                <td className="product-total text-right py-2">
+                {/* Price + Remove button */}
+                <td className="product-total text-right py-2 flex items-center justify-end gap-3">
                   <span className="amount font-bold">
                     {(item.discountedRetailPrice * item.orderQuantity).toFixed(2)} TK
                   </span>
+                  <button
+                    className="remove-btn"
+                    onClick={() => handleRemoveProduct(item.id, item.name)}
+                  >
+                    ✕
+                  </button>
                 </td>
               </tr>
             ))}
@@ -135,6 +138,20 @@ const CheckoutOrders = ({
           object-fit: cover;
           border-radius: 6px;
           flex-shrink: 0;
+        }
+        .remove-btn {
+          background-color: #ff4d4f; /* Full red color */
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          padding: 4px 8px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.2s;
+          margin-left: 8px; /* Add extra space after TK */
+        }
+        .remove-btn:hover {
+          background-color: #d9363e; /* Darker red on hover */
         }
       `}</style>
     </div>

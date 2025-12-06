@@ -1,98 +1,192 @@
+"use client";
+
 import Header from "@/layout/headers/header";
 import Wrapper from "@/layout/wrapper";
-// import { promises as fs } from "fs";
-// import BlogArea from '@/components/blogs/blog-area';//
 import Footer from "@/layout/footers/footer";
 import { Suspense } from "react";
 import Loading from "./loading";
 
-export default async function PrivayPolicyPage() {
-  // const file = await fs.readFile(
-  //   process.cwd() + "/src/app/product-data.json",
-  //   "utf8"
-  // );
-
+export default function PrivacyPolicyPage() {
   return (
     <Wrapper>
-      {/* <Loading /> */}
-      {/* header start */}
-
       <Header />
-
-      {/* header end */}
 
       <main>
         <Suspense fallback={<Loading />}>
-          <section className="product__area pt-30 pb-100">
-            <div className="container">
-              <p
-                className="text-black"
-                dangerouslySetInnerHTML={{
-                  __html: `প্রাইভেসি পলিসি-<br/><br/>
+          <section
+            style={{
+              padding: "80px 16px",
+              background: "linear-gradient(135deg,#f5f8f7,#ffffff)",
+            }}
+          >
+            <div className="container d-flex justify-content-center">
 
-আপনার গোপনীয়তা রক্ষা করা এবং আপনার ডেটার নিরাপত্তা আমাদের জন্য সবচেয়ে গুরুত্বপূর্ণ। আমরা শুধুমাত্র সার্ভিস প্রদান উন্নত করা , সেবা সম্পর্কে জানানো এবং মার্কেটিং বিষয়ক কাজের জন্য ডেটা সংগ্রহ করে থাকি। যদি এই ধরণের কাজের জন্য আপনার তথ্য কাজে না আসে তাহলে আমরা সেই তথ্য মুছে ফেলি বা ফেলা হবে। <br/><br/>
+              <div className="policy-card">
 
-ডেটা সংগ্রহ প্রসঙ্গে- <br/>
+                {/* TITLE */}
+                <h1 className="policy-title">
+                  Kayaa Privacy Policy
+                </h1>
 
-ক্রয় পরবর্তী সেবা প্রদানের জন্য এবং সেবার মান উন্নত করতে যে সকল ডেটা সংগ্রহ করা হয়- <br/>
+                <p className="policy-sub">
+                  আপনার গোপনীয়তা ও তথ্য সুরক্ষা আমাদের সর্বোচ্চ অগ্রাধিকার
+                </p>
 
-আপনার নাম, প্রোফাইলের ছবি এবং জন্ম তারিখ।<br/>
+                {/* SECTION */}
+                <div className="policy-section">
+                  <h4>🔐 আমরা কীভাবে ডেটা ব্যবহার করি</h4>
+                  <ul>
+                    <li>পণ‍্য ডেলিভারি সম্পন্ন করতে</li>
+                    <li>কাস্টমাইজড প্রোডাক্ট রিকমেন্ড দিতে</li>
+                    <li>আমাদের অফার ও সার্ভিস আপডেট জানাতে</li>
+                    <li>পেমেন্ট ভেরিফিকেশন করতে</li>
+                    <li>ইউজার অভিজ্ঞতা বিশ্লেষণের জন্য</li>
+                  </ul>
+                </div>
 
-ফোন নম্বর, ইমেইল এড্রেস, বিল পাঠানোর ঠিকানা এবং পণ্য সরবারহের ঠিকানা। <br/>
+                {/* SECTION */}
+                <div className="policy-section">
+                  <h4>📋 আমরা কী তথ্য সংগ্রহ করি</h4>
+                  <ul>
+                    <li>নাম, প্রোফাইল ছবি ও জন্মতারিখ</li>
+                    <li>মোবাইল নম্বর, ইমেইল ও বিলিং/ডেলিভারি ঠিকানা</li>
+                    <li>পেমেন্ট তথ্য (ব্যাংক ও কার্ড ইনফো)</li>
+                    <li>সাইট ভিজিটের ডেটা (ডিভাইস, ব্রাউজার, ক্লিক হিস্ট্রি)</li>
+                    <li>লগইন ইনফো ও অর্ডার হিস্ট্রি</li>
+                    <li>লোকেশন ও আইডি সংক্রান্ত তথ্য</li>
+                  </ul>
+                </div>
 
-পেমেন্ট ইনফরমেশন, ডেবিট/ ক্রেডিট কার্ড ইনফরমেশন এবং ব্যাংকের ইনফরমেশন। <br/>
+                {/* SECTION */}
+                <div className="policy-section">
+                  <h4>🍪 Cookies</h4>
+                  <p>
+                    Cookies ইউজারের অভিজ্ঞতা উন্নত করতে ব্যবহৃত হয়।  
+                    এটি বাধ্যতামূলক নয় এবং ব্রাউজার থেকেই পরিবর্তন করা যায়।
+                  </p>
+                </div>
 
-সাইট ব্যবহারকারীর ভিজিটের তথ্য, ক্লিক, ডিভাইস , অপারেটিং সিস্টেম এর তথ্য। <br/>
+                {/* SECTION */}
+                <div className="policy-section">
+                  <h4>🛡️ Security</h4>
+                  <p>
+                    আমরা আধুনিক Firewall ও Security System ব্যবহার করে
+                    আপনার ডেটা নিরাপদ সার্ভারে সংরক্ষণ করি।
+                  </p>
+                </div>
 
-লগইন ডাটা, ব্রাউজার টাইপ, ভার্সন<br/>
+                {/* SECTION */}
+                <div className="policy-section">
+                  <h4>📝 আপনার অধিকার</h4>
+                  <ul>
+                    <li>আপনার তথ্য দেখার অধিকার</li>
+                    <li>ডাটা সংশোধন বা ডিলিটের অনুরোধ করা</li>
+                    <li>ডেটা ব্যবহারের সীমা নির্ধারণ করা</li>
+                  </ul>
+                </div>
 
-ইউজার নেম, পাসওয়ার্ড, পছন্দ, অপছন্দ, ফিডব্যাক, অর্ডারের তথ্য।   <br/>
+                {/* NOTE */}
+                <div className="policy-note">
+                  ⚠️ আমরা ১৮ বছরের নিচে কারো ব্যক্তিগত তথ্য সংরক্ষণ করি না।
+                </div>
 
-লোকেশন, আইডি কার্ড এর ইনফরমেশন। <br/>
+              </div>
 
-আমরা নিম্নোক্তভাবে আপনার তথ্য ব্যবহার করে থাকবো- <br/>
-
-পণ্য আপনাকে পৌঁছে দিতে। <br/>
-
-আপনার পছন্দের পণ্য আপনার সামনে উপস্থাপন করতে। <br/>
-
-আমাদের পরিসেবা আপনাকে জানাতে। <br/>
-
-পেমেন্ট তথ্য সঠিক কিনা তা যাচাই করতে। <br/>
-
-আপনার পছন্দ অপছন্দ বুঝতে। <br/>
-
-ইউজার এক্সপেরিয়েন্স বোঝার জন্য- <br/>
-
-Kayaa.com সাইটে ইউজার এক্সপেরিয়েন্স কেমন তা বোঝার জন্য বিভিন্ন ধরণের সার্ভে এবং রিসার্চ করা হয়। ইউজারের ডেমোগ্রাফিকস, ইন্টারেস্ট, বিহেভিয়ার ট্রাক করা হয় যেন ইউজারকে আরও সুন্দর অভিজ্ঞতা দেওয়া সম্ভব হয়। আমরা আপনার তথ্য অ্যাডমিনিস্ট্রেশন, মতামত, মার্কেট রিসার্চ এবং কম্পিটিশন এনালাইসিস এর কাজে ব্যবহার করতে পারি। <br/>
-
-কুকি- <br/>
-
-আমাদের সাইট অথরাইজ কুকিজ বা একই ধরণের সার্ভিস ব্যবহার করে থাকে। আমাদের সাইট ব্যবহার করার জন্য কুকিজ ব্যবহার বাধ্যতামূলক নয়। কুকিজ হল এক ধরণের টেক্সট ফাইল যা ব্রাউজারে সেভ থাকে। বিভিন্ন সময় সাইট ব্যবহারের সময় সাইট এই ইউজার কে চিনতে পারে এবং তার পছন্দ মত পণ্য দেখাতে পারে। আপনি যদি কুকিজ সম্পর্কে আরও জানতে চান তাহলে গুগলে সার্চ করতে পারেন। <br/>
-
- সিকুরিটি- <br/>
-
-ডেটা সুরক্ষার জন্য রয়েছে যথাযথ টেকনিক্যাল এক্সপার্ট এবং সিকুরিটি সিস্টেম। আমরা আপনার ডেটা একটি সুরক্ষিত সার্ভারে সংরক্ষণ করি। আমাদের সার্ভারে কয়েকটি লেয়ারে ফায়ার ওয়াল রয়েছে। আমরা মাঝে মাঝে আপনার একাউন্ট ভ্যারিফাই করতে বলি যেন আপনার একাউন্ট আরও সুরক্ষিত থাকে। এখন আপনার পালা, আপনার একাউন্ট এবং আপনার নিজস্ব কম্পিউটার কে অন্যদের হাত থেকে সুরক্ষিত রাখা। <br/>
-
-আপনার অধিকার সমূহ- <br/>
-
-আমরা আপনার ডাটার বিষয়ে যথেষ্ট সচেতন। আপনি চাইলে আপনার ডাটা দেহতে পারবেন এবং আপনার ডাটা মুছে ফেলতে আমাদের জানাতে পারবেন। <br/>
-
-ডাটা প্রটেকশন আইন অনুযায়ী আমরা আপনার ডাটা মুছে ফেলতে ফিস নিতে পারি। যদি তেমন হয় আপনাকে ফিস সম্পর্কে জানানো হবে।<br/> 
-
-বি দ্রঃ <br/>
-
-আমরা ১৮ বছরের নিচের বয়সীদের কাছে পণ্য বা সেবা বিক্রি করে থাকি না। এবং আমাদের জানামতে কোন ১৮ বছরের নিচের বয়সীদের তথ্য সংগ্রহ বা সংরক্ষণ করি না। আপনি আমাদের সাইট ব্যবহার করছেন তাই আমরা ধারণা করছি আপনার বয়স ১৮ বছর বা তার বেশি। `,
-                }}
-              />
             </div>
           </section>
         </Suspense>
       </main>
 
-      {/* footer start */}
       <Footer />
-      {/* footer end */}
+
+      {/* ========== THEME CSS ========== */}
+      <style jsx>{`
+        .policy-card {
+          max-width: 860px;
+          background: rgba(255,255,255,0.92);
+          padding: 50px 40px;
+          border-radius: 18px;
+          border: 1px solid rgba(26,188,156,0.15);
+          box-shadow: 0 12px 36px rgba(11,61,11,.12);
+          transition: .35s ease;
+          backdrop-filter: blur(4px);
+        }
+
+        .policy-card:hover{
+          transform: translateY(-4px) scale(1.01);
+          // box-shadow:
+          //   0 16px 45px rgba(11,61,11,.18),
+          //   0 0 20px rgba(26,188,156,.12);
+        }
+
+        .policy-title{
+          text-align:center;
+          font-size:36px;
+          font-weight:800;
+          letter-spacing:1.5px;
+          background: linear-gradient(135deg,#0b3d0b,#1abc9c);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin-bottom:8px;
+        }
+
+        .policy-sub{
+          text-align:center;
+          color:#555;
+          margin-bottom:35px;
+          font-size:14px;
+          letter-spacing:.6px;
+        }
+
+        .policy-section{
+          margin-bottom:28px;
+        }
+
+        .policy-section h4{
+          font-weight:700;
+          margin-bottom:10px;
+          color:#0b3d0b;
+        }
+
+        .policy-section ul{
+          padding-left:22px;
+          margin:0;
+        }
+
+        .policy-section li{
+          margin-bottom:6px;
+          font-size:15px;
+          color:#333;
+          line-height:1.7;
+        }
+
+        .policy-section p{
+          margin:0;
+          font-size:15px;
+          color:#444;
+          line-height:1.7;
+        }
+
+        .policy-note{
+          background:rgba(231,76,60,0.1);
+          color:#a93226;
+          padding:12px 16px;
+          border-radius:12px;
+          font-size:14px;
+          margin-top:15px;
+          border-left:4px solid #e74c3c;
+        }
+
+        @media(max-width:576px){
+          .policy-card{
+            padding:28px 18px;
+          }
+          .policy-title{
+            font-size:26px;
+          }
+        }
+      `}</style>
+
     </Wrapper>
   );
 }

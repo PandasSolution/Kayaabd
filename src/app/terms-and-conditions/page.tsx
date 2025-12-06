@@ -1,56 +1,203 @@
+"use client";
+
 import Header from "@/layout/headers/header";
 import Wrapper from "@/layout/wrapper";
-// import { promises as fs } from "fs";
-// import BlogArea from '@/components/blogs/blog-area';//
 import Footer from "@/layout/footers/footer";
 import { Suspense } from "react";
 import Loading from "./loading";
 
-export default async function TermsAndConditionsPage() {
-  // const file = await fs.readFile(
-  //   process.cwd() + "/src/app/product-data.json",
-  //   "utf8"
-  // );
-
+export default function TermsAndConditionsPage() {
   return (
     <Wrapper>
-      {/* <Loading /> */}
-      {/* header start */}
-
       <Header />
-
-      {/* header end */}
 
       <main>
         <Suspense fallback={<Loading />}>
-          <section className="product__area pt-30 pb-100">
-            <div className="container">
-              <p
-                className="text-black"
-                dangerouslySetInnerHTML={{
-                  __html: `শর্তাবলী<br/><br/>
+          <section
+            style={{
+              padding: "80px 16px",
+              background: "linear-gradient(135deg,#f5f8f7,#ffffff)",
+            }}
+          >
+            <div className="container d-flex justify-content-center">
 
-Strike এ আপনাকে স্বাগতম। Strike একটি মার্কেট-প্লেস। নিচের বক্তব্যটি আপনার অ্যাক্সেস, এবং ব্যবহার নিয়ন্ত্রণ সংক্রান্ত শর্তাবলী। আপনি সাইটটি ব্যবহার করছেন তাই আমরা ধরে নিচ্ছি, আপনি নিম্নোক্ত শর্তাবলী স্বীকার করেন এবং প্রতিনিধিত্ব করেন যে আপনি এই শর্তাবলী মেনে চলতে সম্মত হয়েছেন। আপনি যদি এই ইউজার এগ্রিমেন্টে সম্মত না হন তবে অনুগ্রহ করে এই সাইটে প্রবেশ, নিবন্ধন বা ব্যবহার করবেন না। এই সাইটটির মালিকানা, পরিচালনার যাবতীয় দায়িত্ব Strike ডট কমের।<br/><br/>
+              <div className="policy-card">
 
-strike.com কোন পূর্ব বিজ্ঞপ্তি ছাড়াই যে কোন সময় এই শর্তাবলীর পরিবর্তন, পরিবর্তন, যোগ বা অংশগুলিকে অপসারণ করার অধিকার সংরক্ষণ করে। কোন প্রকার নোটিশ প্রদান না করে সাইটে পোস্ট করা হলেও পরিবর্তন কার্যকর হবে। যেকোনো আপডেটের জন্য অনুগ্রহ করে নিয়মিত এই নিয়ম ও শর্তাবলী দেখুন। আমাদের যাবতীয় সেবা পেতে এখানে একটি একাউন্ট তৈরি করুন এবং সঠিক সেবার মান পেতে সকল তথ্য প্রদান করুন। Strike যেকোনো সময় যেকোনো একাউন্ট বাতিল করার অধিকার সংরক্ষণ করে এবং তাতে যেকোনো সমস্যা সৃষ্ট হলে তার জন্য Strike দায়ী থাকবে না। <br/><br/>
+                {/* TITLE */}
+                <h1 className="policy-title">
+                  Kayaa Terms & Conditions
+                </h1>
 
-আপনার ইউজার একাউন্ট ডিটেইলস , পাসওয়ার্ড গোপন রাখা আপনার দায়িত্ব। strike.com একাউন্ট খুলে আপনি যাবতীয় শর্তে একমত হয়েছেন যে, আপনার সকল তথ্য গোপন রাখবেন। যদি কখনো মনে হয় আপনার একাউন্ট কেউ ব্যবহার করছে কিংবা, মিস-ইউজ হচ্ছে তাহলে সাথে সাথে Strike কে জানাতে হবে। যদি না জানানো হয় এবং এর দ্বারা Strike এর কোন ক্ষতি সাধন হয় তাহলে আপনি যেই ক্ষতিপূরণ দিতে বাধ্য থাকবেন। <br/><br/>
+                <p className="policy-sub">
+                  আমাদের ওয়েবসাইট ব্যবহার করার আগে শর্তাবলী মনোযোগ সহকারে পড়ুন
+                </p>
 
-এই সাইটে প্রকাশিত সকল ছবি বা লেখা তথ্য প্রদানের জন্য। এর সকল তথ্য সঠিক হওয়ার গ্যারান্টি Strike দিচ্ছে না। এখানে প্রকাশিত তথ্য সাপ্লায়ার এর ভুলের কারনে হতে পারে। তাই যাচাই-পূর্বক সকল পণ্য ক্রয় করতে অনুরোধ করা হচ্ছে। Strike সাইটে প্রকাশিত যেকোনো তথ্য বাণিজ্যিক ব্যবহার করতে হলে অবশ্যই Strike লিখিত অনুমতি নিতে হবে অন্যথায় আইনি ব্যবস্থা গ্রহণ করা হতে পারে। <br/><br/>
 
-আমরা প্রতিটি পণ্যের স্টকের তথ্য আমাদের সাইটে প্রকাশ করে থাকি। কিন্তু এই তথ্য পর্যাপ্ত নয়। অনেক সময় আমাদের সাপ্লায়ারের কাছে পণ্য না থাকায় পণ্যটি দেওয়া সম্ভব নাও হতে পারে। যদি কোন পণ্য দেওয়া সম্ভব না হয় বা অর্ডারটি ক্যান্সেল করতে হয় তাহলে আপনাকে SMS বা EMAIL করে জানানো হবে। <br/><br/>
+                {/* ---- SECTION ---- */}
+                <div className="policy-section">
+                  <h4>📜 সাধারণ শর্ত</h4>
+                  <p>
+                    Kayaa একটি অনলাইন মার্কেটপ্লেস। আমাদের
+                    ওয়েবসাইটে প্রবেশ বা ব্যবহার করার মাধ্যমে আপনি
+                    এই শর্তাবলী মেনে সম্মত হচ্ছেন। এই শর্তাবলীতে অসম্মত হলে
+                    অনুগ্রহ করে সাইট ব্যবহার থেকে বিরত থাকুন।
+                  </p>
+                </div>
 
-একটি অর্ডার বিভিন্ন কারনে ক্যান্সেল হতে পারে। শুধুমাত্র ইমেইল, ফোন নম্বর নয়, আরও তথ্য প্রদান করার জন্য বলা হতে পারে। ক্রেডিট বা ডেবিট কার্ডের বিষয়ক  যেকোনো প্রতারণা এড়াতে, আপনাকে পণ্য সরবরাহ করার আগে পেমেন্ট সিস্টেম এবং আপনার দেওয়া ব্যক্তিগত যাচাই করার অধিকার Strike সংরক্ষণ করে।  এই যাচাই করার জন্য আপনার পরিচয়, বাসস্থান, ব্যাংকিং ইনফরমেশন ব্যবহার হবে।  এই তথ্যগুলোর সম্মানজনক উত্তর না পাওয়া গেলে অর্ডার বাতিল করা হতে পারে। কোনরকম পূর্ব নোটিশ ছাড়াই প্রতারণা এড়াতে Strike অর্ডার ক্যান্সেল করার অধিকার সংরক্ষণ করে। `,
-                }}
-              />
+                {/* ---- SECTION ---- */}
+                <div className="policy-section">
+                  <h4>🔁 নীতিমালা পরিবর্তন</h4>
+                  <p>
+                    পূর্ব নোটিশ ছাড়াই আমরা যেকোনো সময় শর্তাবলী
+                    সংযোজন, সংশোধন বা বাতিল করার অধিকার সংরক্ষণ করি।
+                    সর্বশেষ আপডেট জানতে নিয়মিত এই পেইজ দেখুন।
+                  </p>
+                </div>
+
+                {/* ---- SECTION ---- */}
+                <div className="policy-section">
+                  <h4>👤 একাউন্ট দায়বদ্ধতা</h4>
+                  <ul>
+                    <li>সঠিক তথ্য দিয়ে একাউন্ট তৈরি করা আবশ্যক</li>
+                    <li>পাসওয়ার্ড ও লগইন তথ্য গোপন রাখা আপনার দায়িত্ব</li>
+                    <li>কোনোরূপ সন্দেহজনক কার্যকলাপ হলে আমাদের জানাতে হবে</li>
+                  </ul>
+                </div>
+
+                {/* ---- SECTION ---- */}
+                <div className="policy-section">
+                  <h4>🛍️ পণ্য ও কন্টেন্ট</h4>
+                  <ul>
+                    <li>সাইটের ছবি এবং তথ্য তথ্য প্রদানের উদ্দেশ্যে</li>
+                    <li>সাপ্লায়ারের ভুলের কারণে তথ্য হালনাগাদ নাও থাকতে পারে</li>
+                    <li>যাচাই করে অর্ডার করার অনুরোধ করা হচ্ছে</li>
+                    <li>অনুমতি ছাড়া কন্টেন্ট বাণিজ্যিকভাবে ব্যবহার আইনত দণ্ডনীয়</li>
+                  </ul>
+                </div>
+
+                {/* ---- SECTION ---- */}
+                <div className="policy-section">
+                  <h4>📦 স্টক ও অর্ডার</h4>
+                  <ul>
+                    <li>স্টক তথ্য রিয়েল টাইমে পরিবর্তিত হতে পারে</li>
+                    <li>অপ্রাপ্য হলে অর্ডার ক্যানসেল হতে পারে</li>
+                    <li>SMS অথবা Email দ্বারা গ্রাহককে জানানো হবে</li>
+                  </ul>
+                </div>
+
+                {/* ---- SECTION ---- */}
+                <div className="policy-section">
+                  <h4>✅ অর্ডার যাচাইকরণ</h4>
+                  <p>
+                    প্রতারণা প্রতিরোধে Kayaa পেমেন্ট
+                    ও ব্যক্তিগত তথ্য যাচাই করার অধিকার রাখে।
+                    সঠিক তথ্য না দিলে পূর্ব নোটিশ ছাড়াই
+                    অর্ডার বাতিল করা হতে পারে।
+                  </p>
+                </div>
+
+
+                {/* ---- NOTE ---- */}
+                <div className="policy-note">
+                  ⚠️ Kayaa যেকোনো সময় একাউন্ট বাতিল বা পরিষেবা বন্ধ করার অধিকার সংরক্ষণ করে।
+                </div>
+
+              </div>
+
             </div>
           </section>
         </Suspense>
       </main>
 
-      {/* footer start */}
       <Footer />
-      {/* footer end */}
+
+      {/* ========== THEME CSS ========== */}
+      <style jsx>{`
+        .policy-card {
+          max-width: 860px;
+          background: rgba(255,255,255,0.92);
+          padding: 50px 40px;
+          border-radius: 18px;
+          border: 1px solid rgba(26,188,156,0.15);
+          box-shadow: 0 12px 36px rgba(11,61,11,.12);
+          transition: .35s ease;
+          backdrop-filter: blur(4px);
+        }
+
+        .policy-card:hover{
+          transform: translateY(-4px) scale(1.01);
+          // box-shadow:
+          //   0 16px 45px rgba(11,61,11,.18),
+          //   0 0 20px rgba(26,188,156,.12);
+        }
+
+        .policy-title{
+          text-align:center;
+          font-size:36px;
+          font-weight:800;
+          letter-spacing:1.5px;
+          background: linear-gradient(135deg,#0b3d0b,#1abc9c);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin-bottom:8px;
+        }
+
+        .policy-sub{
+          text-align:center;
+          color:#555;
+          margin-bottom:35px;
+          font-size:14px;
+          letter-spacing:.6px;
+        }
+
+        .policy-section{
+          margin-bottom:28px;
+        }
+
+        .policy-section h4{
+          font-weight:700;
+          margin-bottom:10px;
+          color:#0b3d0b;
+        }
+
+        .policy-section ul{
+          padding-left:22px;
+          margin:0;
+        }
+
+        .policy-section li{
+          margin-bottom:6px;
+          font-size:15px;
+          color:#333;
+          line-height:1.7;
+        }
+
+        .policy-section p{
+          margin:0;
+          font-size:15px;
+          color:#444;
+          line-height:1.7;
+        }
+
+        .policy-note{
+          background:rgba(231,76,60,0.1);
+          color:#a93226;
+          padding:12px 16px;
+          border-radius:12px;
+          font-size:14px;
+          border-left:4px solid #e74c3c;
+        }
+
+        @media(max-width:576px){
+          .policy-card{
+            padding:28px 18px;
+          }
+          .policy-title{
+            font-size:26px;
+          }
+        }
+      `}</style>
+
     </Wrapper>
   );
 }

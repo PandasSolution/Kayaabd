@@ -50,7 +50,7 @@ const CheckoutArea = () => {
   const [postalCode, setPostalCode] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("Cash on Delivery");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState<boolean>(false);
@@ -68,7 +68,6 @@ const CheckoutArea = () => {
     }
   }, [dispatch]);
 
-  // ✅ Auto update delivery fee based on city
   useEffect(() => {
     if (!city) {
       setDeliveryFee(0);
@@ -100,7 +99,6 @@ const CheckoutArea = () => {
         return;
       }
 
-      // ✅ Dynamic delivery charge for payload
       const payload = {
         customerName: name,
         customerPhone: phone,
@@ -132,7 +130,7 @@ const CheckoutArea = () => {
       if (paymentMethod?.toLowerCase() === "digital payment") {
         const responses = await postData(`/orders-init`, payload);
         localStorage.setItem("payload", JSON.stringify(payload));
-        setToastMessage("Redirecting to SSL Commerz...");
+        setToastMessage("Redirecting to payment gateway...");
         window.location.href = responses?.data?.gateway;
         return;
       }
@@ -148,7 +146,6 @@ const CheckoutArea = () => {
       setToastMessage(response?.message as string);
       setIsOrderPlaced(true);
 
-      // ✅ Generate PDF Invoice
       generateProfessionalInvoicePDF({
         invoiceNumber: invoiceNo?.slice(7),
         customerName: name,
@@ -179,122 +176,56 @@ const CheckoutArea = () => {
   return (
     <>
       {cart_products.length === 0 ? (
-        <div className="text-center pt-30">
+        <div className="empty-cart">
           {params?.get("isSuccess") ? (
-            <h3 style={{ background: "#7fea7f", padding: "105px 20px" }}>
-              {params?.get("isSuccess")}
-            </h3>
+            <h3 className="toast-success">{params?.get("isSuccess")}</h3>
           ) : (
             <h3>Your cart is empty</h3>
           )}
-          <Link href="/shop" className="os-btn os-btn-2 mt-30">
+          <Link href="/shop" className="shop-btn">
             Return to shop
           </Link>
         </div>
       ) : (
-        <section className="checkout-area pb-70 pt-70">
+        <section className="checkout-area">
           <div className="container">
             <form>
               <div className="row">
                 {/* Billing Details */}
                 <div className="col-lg-6">
-                  <div className="checkbox-form">
+                  <div className="checkout-card neo-card">
                     <h3>Billing Details</h3>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="checkout-form-list">
+                    <div className="form-row">
+                      {[
+                        { label: "Name", value: name, setter: setName, required: true },
+                        { label: "Email", value: email, setter: setEmail },
+                        { label: "Phone", value: phone, setter: setPhone, required: true },
+                        { label: "District", value: city, setter: setCity, required: true },
+                        { label: "Location", value: postalCode, setter: setPostalCode },
+                        { label: "Address", value: address, setter: setAddress, required: true },
+                      ].map((field, idx) => (
+                        <div className="form-group" key={idx}>
                           <label>
-                            Name <span className="required">*</span>
+                            {field.label} {field.required && <span>*</span>}
                           </label>
                           <input
-                            type="text"
-                            value={name}
-                            placeholder="Your Name"
-                            onChange={(e) => setName(e.target.value)}
+                            type={field.label === "Email" ? "email" : "text"}
+                            value={field.value}
+                            placeholder={`Your ${field.label}`}
+                            onChange={(e) => field.setter(e.target.value)}
                           />
-                          <ErrorMsg msg={errors.name?.message!} />
+                          <ErrorMsg msg={errors[field.label.toLowerCase() as keyof FormData]?.message!} />
                         </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="checkout-form-list">
-                          <label>Email Address</label>
-                          <input
-                            type="email"
-                            value={email}
-                            placeholder="Your Email"
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                          <ErrorMsg msg={errors.email?.message!} />
-                        </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="checkout-form-list">
-                          <label>
-                            Phone Number <span className="required">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            value={phone}
-                            placeholder="Your Phone Number"
-                            onChange={(e) => setPhone(e.target.value)}
-                          />
-                          <ErrorMsg msg={errors.phone?.message!} />
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="checkout-form-list">
-                          <label>
-                            District <span className="required">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            value={city}
-                            placeholder="Your District"
-                            onChange={(e) => setCity(e.target.value)}
-                          />
-                          <ErrorMsg msg={errors.country?.message!} />
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="checkout-form-list">
-                          <label>
-                            Location <span className="required">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            value={postalCode}
-                            placeholder="Your Location"
-                            onChange={(e) => setPostalCode(e.target.value)}
-                          />
-                          <ErrorMsg msg={errors.postalCode?.message!} />
-                        </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="checkout-form-list">
-                          <label>
-                            Address <span className="required">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            value={address}
-                            placeholder="Area, Road No, House No, Flat No"
-                            onChange={(e) => setAddress(e.target.value)}
-                          />
-                          <ErrorMsg msg={errors.address?.message!} />
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
 
                 {/* Your Order */}
                 <div className="col-lg-6">
-                  <div className="your-order mb-30">
+                  <div className="checkout-card neo-card">
                     <h3>
-                      Your Order{" "}
-                      <span className="text-[gray]" style={{ fontSize: "16px" }}>
-                        Invoice No#{invoiceNo?.slice(7)}
-                      </span>
+                      Your Order <span className="invoice">Invoice No#{invoiceNo?.slice(7)}</span>
                     </h3>
 
                     <CheckoutOrders
@@ -305,10 +236,7 @@ const CheckoutArea = () => {
                     />
 
                     {(toastMessage || params.get("isSuccess")) && (
-                      <div
-                        className="w-[100%] h-[20px] text-center py-2 text-black"
-                        style={{ background: "#7fea7f" }}
-                      >
+                      <div className="toast-message">
                         {toastMessage !== ""
                           ? toastMessage
                           : params.get("isSuccess") === "true"
@@ -317,18 +245,14 @@ const CheckoutArea = () => {
                       </div>
                     )}
 
-                    <div className="order-button-payment mt-20" style={{ textAlign: "center" }}>
+                    <div className="order-button">
                       <button
                         type="button"
-                        className="place-order-btn"
+                        className="place-order-btn neo-btn"
                         onClick={() => placeOrder()}
                         disabled={loading || isOrderPlaced}
                       >
-                        {loading
-                          ? "Order Processing..."
-                          : isOrderPlaced
-                          ? "Order Placed"
-                          : "Order Now"}
+                        {loading ? "Order Processing..." : isOrderPlaced ? "Order Placed" : "Order Now"}
                       </button>
                     </div>
 
@@ -336,7 +260,7 @@ const CheckoutArea = () => {
                       <div className="mt-4">
                         <button
                           type="button"
-                          className="place-order-btn"
+                          className="place-order-btn neo-btn"
                           onClick={() =>
                             generateProfessionalInvoicePDF({
                               invoiceNumber: invoiceNo?.slice(7),
@@ -347,10 +271,8 @@ const CheckoutArea = () => {
                               customerCity: city,
                               customerPostalCode: postalCode,
                               paymentMethod: paymentMethod,
-                              deliveryChargeInside:
-                                city?.toLowerCase() === "dhaka" ? deliveryFee : null,
-                              deliveryChargeOutside:
-                                city?.toLowerCase() !== "dhaka" ? deliveryFee : null,
+                              deliveryChargeInside: city?.toLowerCase() === "dhaka" ? deliveryFee : null,
+                              deliveryChargeOutside: city?.toLowerCase() !== "dhaka" ? deliveryFee : null,
                               orderItems: cart_products,
                             })
                           }
@@ -366,6 +288,124 @@ const CheckoutArea = () => {
           </div>
         </section>
       )}
+
+      <style jsx>{`
+        .checkout-area {
+          padding: 50px 0;
+          background: #ffffffff;
+          min-height: 100vh;
+        }
+
+        .neo-card {
+          background: #fafafaff;
+          border-radius: 20px;
+          padding: 30px;
+          box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;
+          margin-bottom: 30px;
+        }
+
+        h3 {
+          font-size: 22px;
+          font-weight: 700;
+          color: #064e3b;
+          margin-bottom: 20px;
+        }
+
+        .invoice {
+          font-weight: 400;
+          font-size: 14px;
+          color: #555;
+        }
+
+        .form-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+
+        .form-group {
+          flex: 1 1 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        label {
+          font-weight: 600;
+          margin-bottom: 5px;
+          color: #064e3b;
+        }
+
+        label span {
+          color: red;
+        }
+
+        input {
+          padding: 12px 15px;
+          border-radius: 15px;
+          border: none;
+          background: #f8f8f8ff;
+          box-shadow: inset 5px 5px 10px #e4e4e4ff, inset -5px -5px 10px #ffffff;
+          transition: all 0.3s;
+        }
+
+        input:focus {
+          outline: none;
+          box-shadow: inset 2px 2px 5px #ddddddff, inset -2px -2px 5px #ffffff;
+        }
+
+        .toast-message {
+          width: 100%;
+          text-align: center;
+          padding: 10px 0;
+          background: #c3f1b0;
+          border-radius: 12px;
+          color: #064e3b;
+          margin-top: 15px;
+          font-weight: 600;
+        }
+
+        .order-button {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        .neo-btn {
+          background: #ffffffff;
+          color: #064e3b;
+          font-weight: 700;
+          padding: 12px 30px;
+          border-radius: 15px;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          box-shadow: 5px 5px 10px #ffffffff, -5px -5px 10px #ffffff;
+          transition: all 0.3s ease;
+        }
+
+        .neo-btn:hover {
+          box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
+
+        .empty-cart {
+          text-align: center;
+          padding: 80px 20px;
+        }
+
+        .shop-btn {
+          background: #e0e5ec;
+          color: #064e3b;
+          padding: 12px 30px;
+          border-radius: 12px;
+          font-weight: 600;
+          text-decoration: none;
+          box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+          transition: all 0.3s;
+        }
+
+        .shop-btn:hover {
+          box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
+      `}</style>
     </>
   );
 };
