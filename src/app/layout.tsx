@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
 import { Poppins } from "next/font/google";
 import "./globals.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 export const metadata: Metadata = {
   title: "Kayaa",

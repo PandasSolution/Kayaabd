@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
+
   images: {
     remotePatterns: [
       {
@@ -9,6 +10,20 @@ const nextConfig = {
         hostname: "**",
       },
     ],
+  },
+
+  experimental: {
+    turbo: {
+      rules: {
+        "*.scss": {
+          loaders: ["sass-loader"],
+        },
+      },
+    },
+  },
+
+  sassOptions: {
+    includePaths: ["node_modules"],
   },
 };
 
