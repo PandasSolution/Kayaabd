@@ -79,9 +79,6 @@ export default async function HomePage() {
         </Suspense>
       </main>
 
-      {/* Floating Track Order Button */}
-
-
       <Footer />
     </Wrapper>
   );
