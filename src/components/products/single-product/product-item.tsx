@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { ShoppingCart, Zap } from "lucide-react";
+import { Eye } from "lucide-react";
 
 export default function GadgetProductCard({ product, setLoading }: any) {
   const discountPercent = product.productAttributes?.[0]?.discountPercent || 0;
@@ -22,285 +22,184 @@ export default function GadgetProductCard({ product, setLoading }: any) {
   };
 
   return (
-  <div
-  className="product-card-theme"
-  style={{
-    width: "100%",
-    borderRadius: "16px",
-    background: "#ffffff",
-    border: "1px solid #e5e5e5",
-    boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-    position: "relative",
-  }}
-  onClick={handleNavigateToDetails}
->
-  {/* Shiny overlay */}
-  <div
-    className="shiny-overlay"
-    style={{
-      position: "absolute",
-      top: 0,
-      left: "-75%",
-      width: "50%",
-      height: "100%",
-      background:
-        "linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%)",
-      transform: "skewX(-25deg)",
-      transition: "all 0.7s ease",
-      zIndex: 2,
-      pointerEvents: "none",
-    }}
-  />
-
-
+    <div
+      className="product-card-theme"
+      onClick={handleNavigateToDetails}
+    >
       {/* IMAGE */}
-      <div
-        onClick={handleNavigateToDetails}
-        className="product-image-wrapper"
-        style={{
-          width: "100%",
-          aspectRatio: "1 / 1.1", // maintain ratio
-          overflow: "hidden",
-          position: "relative",
-          borderRadius: "16px 16px 0 0",
-          cursor: "pointer",
-        }}
-      >
+      <div className="product-image-wrapper">
         <Image
           src={product?.images?.[0]?.image ?? "/noimage.png"}
           alt={product.name}
           fill
-          style={{
-            objectFit: "cover",
-            transition: "transform 0.5s ease",
-          }}
           className="product-image"
         />
+
         {discountPercent > 0 && (
           <div className="discount-badge">{discountPercent}% OFF</div>
         )}
+
         {stock <= 0 && (
           <div className="out-stock-badge">Out of Stock</div>
         )}
       </div>
 
       {/* INFO */}
-      <div
-        style={{
-          flex: 1,
-          padding: "15px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: isMobile ? "14px" : "20px",
-            fontWeight: 600,
-            color: "#0b3d0b", // theme color
-            lineHeight: 1.2,
-            minHeight: isMobile ? "36px" : "44px",
-            overflow: "hidden",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            marginBottom: "8px",
-          }}
-        >
-          {product.name}
-        </h3>
+      <div className="info-wrapper">
+        <h3 className="product-title">{product.name}</h3>
 
         {/* PRICE */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
-          <span
-            style={{
-              fontSize: isMobile ? "18px" : "25px",
-              fontWeight: 700,
-              color: "#0b3d0b", // theme color
-            }}
-          >
+        <div className="price-row">
+          <span className="sale-price">
             {product.productAttributes?.[0]?.discountedRetailPrice} TK
           </span>
+
           {discountPercent > 0 && (
-            <span
-              style={{
-                fontSize: isMobile ? "12px" : "14px",
-                fontWeight: 500,
-                color: "#94a3b8",
-                textDecoration: "line-through",
-              }}
-            >
+            <span className="regular-price">
               {product.productAttributes?.[0]?.retailPrice}
             </span>
           )}
         </div>
 
-        {/* ACTION BUTTONS */}
-        <div
-          style={{
-            display: "flex",
-            gap: "8px",
-            marginTop: "8px",
-          }}
+        {/* ✅ QUICK VIEW BUTTON (PRICE ER NICHE) */}
+        <button
+          className="quick-view-btn"
+          onClick={handleNavigateToDetails}
         >
-          <button
-            onClick={handleNavigateToDetails}
-            disabled={stock <= 0}
-            className="add-cart-btn-theme"
-          >
-            <ShoppingCart size={16} /> Add
-          </button>
-
-          <button
-            onClick={handleNavigateToDetails}
-            disabled={stock <= 0}
-            className="buy-now-btn-theme"
-          >
-            <Zap size={16} /> Buy
-          </button>
-        </div>
+          <Eye size={18} />
+          <span>Quick View</span>
+        </button>
       </div>
 
-      {/* CSS for zoom and theme */}
-     <style jsx>{`
-  .product-card-theme {
-    width: 100%;
-    border-radius: 16px;
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    height: 520px; /* Desktop height */
-  }
+      {/* ================= CSS ================= */}
+      <style jsx>{`
+        .product-card-theme {
+          width: 100%;
+          height: 520px;
+          background: #fff;
+          border-radius: 16px;
+          border: 1px solid #e5e5e5;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+          overflow: hidden;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          flex-direction: column;
+        }
 
-  /* ✅ MOBILE RESPONSIVE HEIGHT */
-  @media (max-width: 767px) {
-    .product-card-theme {
-      height: 390px;   /* Mobile compact height */
-    }
+        @media (max-width: 767px) {
+          .product-card-theme {
+            height: 350px;
+          }
+        }
 
-    .product-image-wrapper {
-      aspect-ratio: 1 / 1;
-    }
+        /* IMAGE */
+        .product-image-wrapper {
+          width: 100%;
+          aspect-ratio: 1 / 1.1;
+          position: relative;
+          overflow: hidden;
+          border-radius: 16px 16px 0 0;
+        }
 
-    .product-image {
-      transform: scale(1);
-    }
-  }
+        .product-image {
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
 
-  /* Desktop hover zoom */
-  .product-card-theme:hover .product-image {
-    transform: scale(1.08);
-  }
+        .product-card-theme:hover .product-image {
+          transform: scale(1.06);
+        }
 
-  /* Shining effect */
-  .product-card-theme::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -75%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-      120deg,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0.2) 50%,
-      rgba(255,255,255,0) 100%
-    );
-    transform: skewX(-25deg);
-    transition: all 0.7s ease;
-    z-index: 2;
-  }
+        /* BADGES */
+        .discount-badge {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background: linear-gradient(135deg, #0b3d0b, #1abc9c);
+          color: white;
+          padding: 6px 12px;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 700;
+        }
 
-  .product-card-theme:hover::after {
-    left: 125%;
-  }
+        .out-stock-badge {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          background: #000;
+          color: white;
+          padding: 6px 12px;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 600;
+        }
 
-  .discount-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: linear-gradient(135deg, #0b3d0b, #1abc9c);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 700;
-    z-index: 10;
-  }
+        /* INFO */
+        .info-wrapper {
+          padding: 14px;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
 
-  .out-stock-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #000;
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    z-index: 10;
-  }
+        .product-title {
+          font-size: ${isMobile ? "14px" : "20px"};
+          font-weight: 600;
+          color: #0b3d0b;
+          line-height: 1.2;
+          min-height: ${isMobile ? "36px" : "44px"};
+          margin-bottom: 6px;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
 
-  .add-cart-btn-theme {
-    flex: 1;
-    padding: 10px 0;
-    border-radius: 12px;
-    background: #ffffff;
-    border: 1px solid #0b3d0b;
-    color: #0b3d0b;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-  }
+        .price-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 10px; /* ✅ price niche gap */
+        }
 
-  .add-cart-btn-theme:hover {
-    background: rgba(11,61,11,0.05);
-    transform: translateY(-2px);
-  }
+        .sale-price {
+          font-size: ${isMobile ? "18px" : "24px"};
+          font-weight: 700;
+          color: #0b3d0b;
+        }
 
-  .buy-now-btn-theme {
-    flex: 1;
-    padding: 10px 0;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #0b3d0b, #1abc9c);
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    border: none;
-    transition: all 0.3s ease;
-  }
+        .regular-price {
+          font-size: ${isMobile ? "12px" : "14px"};
+          color: #94a3b8;
+          text-decoration: line-through;
+        }
 
-  .buy-now-btn-theme:hover {
-    background: linear-gradient(135deg, #0a350a, #16a085);
-    transform: translateY(-2px);
-  }
-`}</style>
+        /* QUICK VIEW BUTTON */
+        .quick-view-btn {
+          width: 100%;
+          background: linear-gradient(135deg, #0b3d0b, #1abc9c);
+          color: #fff;
+          border: none;
+          padding: 10px 0;
+          border-radius: 14px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+          transition: 0.3s ease;
+        }
+
+        .quick-view-btn:hover {
+          transform: translateY(-2px) scale(1.04);
+          background: linear-gradient(135deg, #083208, #16a085);
+        }
+      `}</style>
     </div>
   );
 }
