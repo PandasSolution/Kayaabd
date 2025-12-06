@@ -2,317 +2,250 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Loader from "../Loader";
 
-type IProps = {
-  spacing?: string;
-  categories?: any[];
+type Category = {
+  id: string;
+  name: string;
+  image?: string;
+  discount?: number;
+  smDesc?: string;
 };
 
-const ShopCategory = ({ spacing = "", categories = [] }: IProps) => {
+type ShopCategoryProps = {
+  spacing?: string;
+  categories?: Category[];
+};
+
+const ShopCategory = ({
+  spacing = "80px 0 60px 0",
+  categories = [],
+}: ShopCategoryProps) => {
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   if (!categories || categories.length === 0) return null;
 
   return (
     <>
-      <div className={`shop-categories ${spacing}`}>
-        <div className="wrapper">
-          <div className="header">
-            <h2>Explore Our Collections</h2>
-            <p>Discover the perfect saree for every occasion</p>
+      {loading && <Loader />}
+
+      <section style={{ padding: spacing, background: "#fafafa",marginTop:"-50px" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 20px" }}>
+          
+          {/* ===== SECTION HEADER ===== */}
+          <div style={{ textAlign: "center", marginBottom: "55px" }}>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#b45309",
+                textTransform: "uppercase",
+                letterSpacing: "2px",
+                fontWeight: 700,
+                marginBottom: "8px",
+              }}
+            >
+              Kayaa Saree Collection
+            </p>
+
+            <h2
+              style={{
+                fontSize: isMobile ? "30px" : "42px",
+                fontWeight: 800,
+                color: "#0b3d0b",
+                margin: "8px 0",
+              }}
+            >
+              Premium Sarees for Every Occasion
+            </h2>
+
+            <p
+              style={{
+                maxWidth: "720px",
+                margin: "0 auto",
+                fontSize: isMobile ? "14px" : "16px",
+                color: "#555",
+                lineHeight: 1.75,
+              }}
+            >
+              Discover elegant hand-picked sarees for wedding, party & daily wear.
+              Authentic designs, premium fabrics and unbeatable comfort —
+              only from <strong>Kayaa</strong>.
+            </p>
           </div>
 
-          <div className="grid">
+          {/* ===== CATEGORY GRID ===== */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile
+                ? "repeat(2, 1fr)"
+                : "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "24px",
+            }}
+          >
             {categories.map((item) => (
               <Link
                 key={item.id}
                 href={`/shop?category=${item.id}`}
                 onClick={() => setLoading(true)}
-                className="card-link"
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                <div className="card">
-                  <div className="img-box">
+                <div className="category-card">
+
+                  {/* IMAGE */}
+                  <div className="image-box">
                     <Image
                       src={item.image ?? "/noimage.png"}
                       alt={item.name}
                       fill
-                      sizes="(max-width: 600px) 50vw, 25vw"
-                      style={{ objectFit: "cover" }}
+                      style={{
+                        objectFit: "cover",
+                        transition: "all 0.4s ease",
+                      }}
                     />
-                    <div className="overlay"></div>
+
+                    {/* Discount */}
+                    {item.discount ? (
+                      <div className="discount-badge">
+                        {item.discount}% OFF
+                      </div>
+                    ) : null}
                   </div>
-                  
-                  <div className="info">
+
+                  {/* TEXT */}
+                  <div className="content">
                     <h3>{item.name}</h3>
-                    <button className="btn">
-                      Shop Now
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
-                    </button>
+
+                    {item.smDesc && (
+                      <p>
+                        {item.smDesc.length > 55
+                          ? `${item.smDesc.slice(0, 55)}...`
+                          : item.smDesc}
+                      </p>
+                    )}
+
+                    <span className="shop-btn">
+                      Shop Now →
+                    </span>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
+
+          {/* Bottom CTA */}
+          <div style={{ textAlign: "center", marginTop: "35px" }}>
+            <Link
+              href="/shop"
+              style={{
+                fontSize: "15px",
+                color: "#0b3d0b",
+                fontWeight: 700,
+                textDecoration: "underline",
+              }}
+            >
+              Browse All Sarees →
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
+      {/* ===== STYLES ===== */}
       <style jsx>{`
-        .shop-categories {
-          padding: 70px 0;
-          background: #fff;
-        }
-
-        .wrapper {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 30px;
-        }
-
-        .header {
-          text-align: center;
-          margin-bottom: 50px;
-        }
-
-        .header h2 {
-          font-size: 2.5rem;
-          font-weight: 800;
-          background: linear-gradient(120deg, #064e3b, #10b981);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          margin: 0 0 10px;
-        }
-
-        .header p {
-          font-size: 1.1rem;
-          color: #64748b;
-          margin: 0;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 30px;
-        }
-
-        .card-link {
-          text-decoration: none;
-          display: block;
-        }
-
-        .card {
-          background: #fff;
-          border-radius: 20px;
+        .category-card {
+          background: #ffffff;
+          border-radius: 18px;
+          box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
           overflow: hidden;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          position: relative;
-          border: 2px solid transparent;
+          transition: all 0.4s ease;
+          height: 100%;
+          cursor: pointer;
+          border: 1px solid rgba(11, 61, 11, 0.08);
         }
 
-        .card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: 20px;
-          padding: 2px;
-          background: linear-gradient(135deg, #10b981, #059669, #10b981);
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-          opacity: 0;
-          transition: opacity 0.5s ease;
+        .category-card:hover {
+          transform: translateY(-6px) scale(1.02);
+          box-shadow: 0 18px 55px rgba(16, 185, 129, 0.25);
         }
 
-        .card:hover::before {
-          opacity: 1;
-        }
-
-        .card:hover {
-          transform: translateY(-15px) scale(1.02);
-          box-shadow: 0 25px 60px rgba(230, 255, 251, 0.3);
-        }
-
-        .img-box {
+        .image-box {
           position: relative;
           width: 100%;
-          padding-top: 100%;
+          aspect-ratio: 1 / 1;
           overflow: hidden;
-          background: #f8fafc;
+          background: #f2f2f2;
         }
 
-        .img-box::after {
-          content: '';
+        .category-card:hover .image-box img {
+          transform: scale(1.1);
+        }
+
+        .discount-badge {
           position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 60px;
-          height: 60px;
-          background: rgba(255, 255, 255, 0.95);
-          border-radius: 50%;
-          transform: translate(-50%, -50%) scale(0);
-          transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-          z-index: 3;
+          top: 10px;
+          right: 10px;
+          background: linear-gradient(135deg, #0b3d0b, #1abc9c);
+          color: #fff;
+          padding: 6px 14px;
+          font-size: 12px;
+          border-radius: 30px;
+          font-weight: 600;
+          z-index: 2;
         }
 
-        .card:hover .img-box::after {
-          transform: translate(-50%, -50%) scale(1);
-        }
-
-        .img-box img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .card:hover .img-box img {
-          transform: scale(1.15) rotate(2deg);
-        }
-
-        .overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.4));
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-
-        .card:hover .overlay {
-          opacity: 1;
-        }
-
-        .info {
-          padding: 25px 20px;
+        .content {
+          padding: 16px 14px 22px;
           text-align: center;
         }
 
-        .info h3 {
-          font-size: 1.4rem;
+        .content h3 {
+          font-size: 17px;
           font-weight: 700;
-          color: #1e293b;
-          margin: 0 0 18px;
-          transition: color 0.3s ease;
+          color: #0b3d0b;
+          margin-bottom: 6px;
         }
 
-        .card:hover .info h3 {
-          color: #ebf0eeff;
+        .content p {
+          font-size: 13px;
+          color: #555;
+          min-height: 32px;
+          margin-bottom: 12px;
         }
 
-        .btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 12px 28px;
-          background: linear-gradient(120deg, #10b981, #059669);
-          color: #fff;
-          font-size: 0.95rem;
+        .shop-btn {
+          display: inline-block;
+          padding: 9px 22px;
+          border-radius: 30px;
+          background: linear-gradient(135deg, #0b3d0b, #1abc9c);
+          color: white;
+          font-size: 13px;
           font-weight: 600;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+          transition: all .3s ease;
         }
 
-        .btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn svg {
-          transition: transform 0.3s ease;
-        }
-
-        .card:hover .btn svg {
-          transform: translateX(4px);
-        }
-
-        @media (max-width: 1200px) {
-          .grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-
-        @media (max-width: 900px) {
-          .grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-          }
-
-          .header h2 {
-            font-size: 2rem;
-          }
+        .category-card:hover .shop-btn {
+          transform: scale(1.08);
+          box-shadow: 0 6px 20px rgba(16,185,129,0.35);
         }
 
         @media (max-width: 600px) {
-          .shop-categories {
-            padding: 50px 0;
+         
+        .
+        
+          .content h3 {
+            font-size: 15px;
           }
-
-          .wrapper {
-            padding: 0 16px;
-          }
-
-          .header {
-            margin-bottom: 35px;
-          }
-
-          .header h2 {
-            font-size: 1.6rem;
-          }
-
-          .header p {
-            font-size: 0.95rem;
-          }
-
-          .grid {
-            gap: 16px;
-          }
-
-          .info {
-            padding: 18px 14px;
-          }
-
-          .info h3 {
-            font-size: 1.1rem;
-            margin: 0 0 14px;
-          }
-
-          .btn {
-            padding: 10px 22px;
-            font-size: 0.85rem;
-          }
-
-          .btn svg {
-            width: 14px;
-            height: 14px;
-          }
-        }
-
-        @media (max-width: 400px) {
-          .grid {
-            gap: 12px;
-          }
-
-          .header h2 {
-            font-size: 1.4rem;
-          }
-
-          .info {
-            padding: 15px 12px;
-          }
-
-          .info h3 {
-            font-size: 1rem;
-          }
-
-          .btn {
-            padding: 9px 18px;
-            font-size: 0.8rem;
+          .content p {
+            font-size: 12px;
           }
         }
       `}</style>

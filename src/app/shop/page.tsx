@@ -11,25 +11,40 @@ export const metadata: Metadata = {
   title: "Shop Page",
 };
 
-export default async function ShopPage({ searchParams }: any) {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  // ✅ MUST await - fix error
+  const params = await searchParams;
+  const categoryParam = params?.category;
+
+  // fetch categories
   const categoriesRes = await fetchData({
     url: `/customer/categories`,
     cache: "force-cache",
   });
 
-  const categoryParam = searchParams?.category;
-
+  // fetch products
   const productRes = await fetchData({
-    url: `/customer/products?limit=500`, // max 500 products
+    url: `/customer/products?limit=500`,
     cache: "force-cache",
   });
 
-  // filter by category
-  let allProducts = productRes?.data?.filter((product: any) =>
-    categoryParam ? product.categoryId === categoryParam : true
-  );
+  const products = productRes?.data || [];
 
-  // get category name for headline
+  // ✅ filter by category correctly
+  const allProducts = categoryParam
+    ? products.filter(
+        (product: any) =>
+          product.category?.id === categoryParam ||
+          product.category_id === categoryParam ||
+          product.categoryId === categoryParam
+      )
+    : products;
+
+  // ✅ resolve category name
   const categoryName = categoriesRes?.data?.find(
     (cat: any) => cat.id === categoryParam
   )?.name;
@@ -40,7 +55,7 @@ export default async function ShopPage({ searchParams }: any) {
       <main>
         <Suspense fallback={<Loading />}>
           <ShopArea
-            allProducts={allProducts || []}
+            allProducts={allProducts}
             categoryName={categoryName || "All Products"}
           />
         </Suspense>

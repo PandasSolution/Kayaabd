@@ -22,27 +22,25 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
   const productsToShow = allProducts.slice(0, visibleCount);
 
   return (
-    <section className="shop__area  pt-80 pl-25">
+    <section className="shop__area pt-100 pb-100 ml-25">
       <div className="container">
 
-        {/* Category Headline */}
-      {/* Category Headline */}
-{categoryName && (
-  <div className="theme-title-wrapper text-center mb-55">
-    <h2 className="theme-section-title">{categoryName}</h2>
-    <p className="theme-section-subtitle">
-      Explore premium products under {categoryName}
-    </p>
-  </div>
-)}
-
+        {/* ===== CATEGORY TITLE ===== */}
+        {categoryName && (
+          <div className="theme-title-wrapper text-center mb-55">
+            <h2 className="theme-section-title">{categoryName}</h2>
+            <p className="theme-section-subtitle">
+              Explore premium products under {categoryName}
+            </p>
+          </div>
+        )}
 
         {allProducts.length === 0 ? (
           <p className="text-center">No products found.</p>
         ) : (
           <>
-            {/* Products Grid */}
-            <div className="row g-4">
+            {/* ===== PRODUCTS GRID ===== */}
+            <div className="row g-4 justify-content-center product-row">
               {productsToShow.map((product: any) => (
                 <div
                   key={product.id}
@@ -53,7 +51,7 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
               ))}
             </div>
 
-            {/* SEE MORE BUTTON */}
+            {/* ===== SEE MORE BUTTON ===== */}
             {visibleCount < allProducts.length && (
               <div className="row mt-45">
                 <div className="col-12 text-center">
@@ -73,17 +71,25 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
       {/* ================= CSS ================= */}
       <style jsx>{`
 
-        /* ---------- Responsive 2 Column Mobile ---------- */
-        @media (max-width: 767px) {
-          .product-col {
-            padding-left: 6px;
-            padding-right: 6px;
-          }
-
-         
+        /* ---------- PRODUCT GRID CENTER ---------- */
+        .product-row {
+          justify-content: center;
         }
 
-        /* ---------- See More Button Theme ---------- */
+        .product-col {
+          display: flex;
+          justify-content: center;
+        }
+
+        /* ---------- MOBILE GRID GAP FIX ---------- */
+        @media (max-width: 767px) {
+          .product-col {
+            padding-left: 8px;
+            padding-right: 8px;
+          }
+        }
+
+        /* ---------- SEE MORE BUTTON ---------- */
         .theme-see-more-btn {
           background: linear-gradient(135deg, #0b3d0b, #1abc9c);
           color: #fff;
@@ -96,14 +102,9 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
           cursor: pointer;
           transition: all 0.35s ease;
           box-shadow: 0 8px 20px rgba(11,61,11,0.35);
-          margin-top: 30px;
+            margin-top:40px
         }
 
-        .shop__area{
-  padding-left: 30px;
-      }
-
-        /* Hover Animation */
         .theme-see-more-btn:hover {
           transform: translateY(-3px) scale(1.05);
           background: linear-gradient(135deg, #083208, #17a88c);
@@ -112,64 +113,66 @@ const ShopArea = ({ allProducts, categoryName }: IProps) => {
             0 0 18px rgba(26,188,156,0.40);
         }
 
-        /* Mobile Button Size */
+        /* ---------- MOBILE BUTTON ---------- */
         @media (max-width: 576px) {
           .theme-see-more-btn {
             width: 50%;
-            padding: 14px 10px;
+            max-width: 280px;
+            padding: 13px 10px;
+            font-size: 14px;
+            margin-top:30px
+          }
+        }
+
+        /* ---------- TITLE ---------- */
+
+        .theme-title-wrapper {
+          margin-bottom: 55px;
+          text-align: center;
+        }
+
+        .theme-section-title {
+          font-size: 44px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          margin-bottom: 8px;
+          background: linear-gradient(135deg, #0b3d0b, #01634dff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: fadeUp 0.6s ease;
+        }
+
+        .theme-section-subtitle {
+          font-size: 16px;
+          color: #555;
+          letter-spacing: .5px;
+          max-width: 520px;
+          margin: 0 auto;
+        }
+
+        /* ---------- MOBILE FONT ---------- */
+        @media (max-width: 576px) {
+          .theme-section-title {
+            font-size: 28px;
+          }
+
+          .theme-section-subtitle {
             font-size: 14px;
           }
         }
 
-        /* ---------- THEME TITLE ---------- */
-
-.theme-title-wrapper {
-  margin-bottom: 55px;
-}
-
-
-.theme-section-title {
-  font-size: 44px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  background: linear-gradient(135deg, #0b3d0b, #01634dff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  
-  animation: fadeUp 0.6s ease;
-}
-
-.theme-section-subtitle {
-  font-size: 16px;
-  color: #555;
-  letter-spacing: .5px;
-}
-
-/* MOBILE FONT */
-@media (max-width: 576px) {
-  .theme-section-title {
-    font-size: 28px;
-  }
-}
-
-/* TITLE ENTRY ANIMATION */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-
-
+        /* ---------- TITLE ENTRY ANIMATION ---------- */
+        @keyframes fadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
       `}</style>
     </section>
   );
